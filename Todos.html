@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html>
+    <title>TodoList</title>
+<head><strong>This<br> is <br> a <br>Todo List<br></strong></head>
+
+<div class="warning">
+    <img src="peppa.jpg"
+    
+         alt="An intimidating pig.">
+    <p><strong>Beware of the pig</strong></p>
+</div>
+
+<div class="warning">
+    <img src="Daddy_Pig-0.png"
+    
+         alt="An intimidating pig.">
+    <p><strong>Beware of the pig</strong></p>
+</div>
+
+<div class="warning">
+    <img src="Georgecerdo.png"
+    
+         alt="An intimidating pig.">
+    <p><strong>Beware of the pig</strong></p>
+</div>
+
+<div class="warning">
+    <img src="Mummy_Pig.png"
+    
+         alt="An intimidating pig.">
+    <p><strong>Beware of the pig</strong></p>
+</div>
+<body>
+    <button onclick = toggleAll()>ToggleAll</button>
+    <button id='add-todo'>Add Todo</button>
+    <input id='add-input'>
+    <ul id = 'todo-list-ul'>
+        
+    </ul>
+    <script>
+    var todos = [
+        {todoText: 'Item 1', completed: false},
+        {todoText: 'Item 2', completed: false}
+    ];
+
+    function edit(event) {
+        var newTodoText = window.prompt('Edit:');
+        if (newTodoText !== null && newTodoText !== "") {
+        var position = event.currentTarget.id.split('-')[1];
+        todos[position].todoText = newTodoText;
+        }
+
+
+        displayTodo();
+
+
+    }
+
+    function add() {
+        var newTodo = addInput.value;
+        todos.push({todoText: newTodo, completed: false});
+        displayTodo();
+    }
+
+    
+
+    function removee(event) {
+        
+        
+        var position = event.currentTarget.id;
+        todos.splice(position, 1);
+        displayTodo();
+    
+
+    }
+
+
+
+    function displayTodo() {
+        var TodosUl = document.getElementById('todo-list-ul');
+        TodosUl.innerHTML = '';
+        for (var i=0; i < todos.length; i++) {     
+            var TodoLi = document.createElement('li');
+            TodoLi.innerText = todos[i].todoText;
+            TodosUl.appendChild(TodoLi);
+
+            if (todos[i].completed === true) {
+                TodoLi.innerText = '[X] ' + todos[i].todoText;
+            }else {
+                TodoLi.innerText = '[ ] ' + todos[i].todoText;
+            }
+        
+        
+        var removeButton = document.createElement('button');
+        removeButton.innerText = 'Remove';
+
+
+        TodoLi.appendChild(removeButton);
+
+        TodosUl.appendChild(TodoLi);
+        removeButton.addEventListener('click', removee);
+        removeButton.id = 'Remove-'+i;
+
+        var toggleButton = document.createElement('button');
+        toggleButton.innerText = 'Toggle';
+        TodoLi.appendChild(toggleButton);
+        TodosUl.appendChild(TodoLi);
+        toggleButton.addEventListener('click', toggle);
+        toggleButton.id = 'Toggle-'+i;
+
+        var editButton = document.createElement('button');
+        editButton.innerText = 'Edit';
+        TodoLi.appendChild(editButton);
+        TodosUl.appendChild(TodoLi);
+        editButton.addEventListener('click', edit);
+        editButton.id = 'Edit-'+i;
+
+ 
+            
+        };
+    }
+    displayTodo();
+
+
+    function toggle(evt) {
+        var position = evt.currentTarget.id.split('-')[1];
+        if (todos[position].completed === false) {
+            todos[position].completed = true;
+        } else {
+            todos[position].completed = false;
+        }
+        displayTodo();
+    }
+
+
+
+    function toggleAll() {
+        var completedTodos = 0;
+        for (var i=0; i < todos.length; i++) {
+            if (todos[i].completed === true) {
+                completedTodos++;
+            }
+        }
+
+        if (completedTodos === todos.length) {
+            for (var i = 0; i < todos.length; i++)
+            todos[i].completed = false;
+        }else {
+            for (var i = 0; i <todos.length; i++)
+            todos[i].completed = true;
+            }
+            displayTodo();
+        
+
+        
+
+    }
+var addTodo = document.getElementById('add-todo');
+var addInput = document.getElementById('add-input');
+addTodo.addEventListener('click', add)
+
+
+
+
+
+</script>
+</body>
+</html>
